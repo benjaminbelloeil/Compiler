@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <queue>
 #include <stdexcept>
 
 template <typename T>
@@ -9,37 +10,44 @@ public:
     Queue() = default;
 
     void enqueue(const T& value) {
-        // TODO: Add value at the back of the circular buffer.
-        (void)value;
-        throw std::logic_error("Queue::enqueue is not implemented");
+        data_.push(value);
     }
 
     T dequeue() {
-        // TODO: Remove and return the front value. Define empty-queue behavior.
-        throw std::logic_error("Queue::dequeue is not implemented");
+        if (data_.empty()) {
+            throw std::out_of_range("Queue is empty!");
+        }
+
+        T value = data_.front();
+        data_.pop();
+        return value;
     }
 
     const T& front() const {
-        // TODO: Return the front value without removing it.
-        throw std::logic_error("Queue::front is not implemented");
+        if (data_.empty()) {
+            throw std::out_of_range("Queue is empty!");
+        }
+
+        return data_.front();
     }
 
     const T& back() const {
-        // TODO: Return the back value without removing it.
-        throw std::logic_error("Queue::back is not implemented");
+        if (data_.empty()) {
+            throw std::out_of_range("Queue is empty!");
+        }
+
+        return data_.back();
     }
 
     [[nodiscard]] bool empty() const noexcept {
-        // TODO: Return whether the queue contains no elements.
-        return true;
+        return data_.empty();
     }
 
     [[nodiscard]] std::size_t size() const noexcept {
-        // TODO: Return the number of stored elements.
-        return 0;
+        return data_.size();
     }
 
 private:
-    // TODO: Add circular-buffer storage and front/back/size state.
+    std::queue<T> data_;
 };
 

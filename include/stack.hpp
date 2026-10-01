@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <stack>
 #include <stdexcept>
 
 template <typename T>
@@ -9,32 +10,35 @@ public:
     Stack() = default;
 
     void push(const T& value) {
-        // TODO: Add value to the top and resize storage when necessary.
-        (void)value;
-        throw std::logic_error("Stack::push is not implemented");
+        data_.push(value);
     }
 
     T pop() {
-        // TODO: Remove and return the top value. Define empty-stack behavior.
-        throw std::logic_error("Stack::pop is not implemented");
+        if (data_.empty()) {
+            throw std::out_of_range("Queue is empty!");
+        }
+        
+        T value = data_.top();
+        data_.pop();
+        return value;
     }
 
     const T& top() const {
-        // TODO: Return the top value without removing it.
-        throw std::logic_error("Stack::top is not implemented");
+        if (data_.empty()) {
+            throw std::out_of_range("Queue is empty!");
+        }
+        return data_.top();
     }
 
     [[nodiscard]] bool empty() const noexcept {
-        // TODO: Return whether the stack contains no elements.
-        return true;
+        return data_.empty();
     }
 
     [[nodiscard]] std::size_t size() const noexcept {
-        // TODO: Return the number of stored elements.
-        return 0;
+        return data_.size();
     }
 
 private:
-    // TODO: Add dynamically managed storage, size, and capacity state.
+    std::stack<T> data_;
 };
 
